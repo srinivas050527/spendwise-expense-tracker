@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit expense' if expense else 'Add expense' }} - SpendWise{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>{{ 'Edit expense' if expense else 'Add expense' }}</h1>
+  <form method="post" class="stack">
+    <label>Title
+      <input name="title" required maxlength="80" value="{{ expense.title if expense else '' }}" autofocus>
+    </label>
+    <label>Amount (₹)
+      <input name="amount" type="number" step="0.01" min="0.01" required value="{{ expense.amount if expense else '' }}">
+    </label>
+    <label>Category
+      <select name="category">
+        {% for c in categories %}
+        <option {{ 'selected' if expense and expense.category == c }}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Date
+      <input name="spent_on" type="date" required value="{{ expense.spent_on if expense else today }}">
+    </label>
+    <div class="row">
+      <button class="primary">{{ 'Save changes' if expense else 'Add expense' }}</button>
+      <a class="btn" href="{{ url_for('dashboard') }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
